@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  background-color: #f8f9fa;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 48px;
+}
+
+.soundbar-title {
+  background-color: #bef264;
+  padding: 24px 48px;
+  border-radius: 24px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.soundbar-title h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  color: black;
+  letter-spacing: 0.1em;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.sound-button {
+  width: 160px;
+  height: 128px;
+  background-color: #d1d5db;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  touch-action: manipulation;
+}
+
+.sound-button:hover {
+  background-color: #9ca3af;
+  transform: translateY(-2px);
+}
+
+.sound-button:active {
+  transform: scale(0.95);
+}
+
+.sound-button.active {
+  background-color: #bef264;
+  box-shadow: 0 0 0 4px #84cc16, 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.sound-button svg {
+  color: black;
+}
+
+.animal-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+}
+
+.status {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.status p {
+  font-size: 1.5rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* iPad 11 inch optimizations */
+@media (max-width: 1024px) {
+  .soundbar-title h1 {
+    font-size: 3rem;
+  }
+
+  .button-grid {
+    gap: 20px;
+  }
+
+  .sound-button {
+    width: 140px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .sound-button {
+    width: 120px;
+    height: 100px;
+  }
+
+  .soundbar-title h1 {
+    font-size: 2.5rem;
+  }
+}

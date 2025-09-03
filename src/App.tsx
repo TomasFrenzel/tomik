@@ -1,11 +1,24 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Volume2 } from "lucide-react"
+import "./App.css"
 
-export default function SoundbarPage() {
-  const [activeButton, setActiveButton] = useState<number | null>(null)
+const Button = ({ children, className, onClick, ...props }) => (
+  <button className={`button ${className || ""}`} onClick={onClick} {...props}>
+    {children}
+  </button>
+)
+
+const VolumeIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="m19.07 4.93-1.41 1.41A8.5 8.5 0 0 1 19.07 19.07l1.41 1.41A10.5 10.5 0 0 0 19.07 4.93z"></path>
+    <path d="m15.54 8.46-1.41 1.41a4 4 0 0 1 0 4.24l1.41 1.41a6 6 0 0 0 0-8.49z"></path>
+  </svg>
+)
+
+function App() {
+  const [activeButton, setActiveButton] = useState(null)
 
   const animalSounds = [
     { name: "Slon", sound: "/placeholder.mp3?animal=elephant" },
@@ -26,14 +39,14 @@ export default function SoundbarPage() {
     { name: "Opice", sound: "/placeholder.mp3?animal=monkey" },
   ]
 
-  const handleButtonClick = (index: number) => {
+  const handleButtonClick = (index) => {
     setActiveButton(index)
 
     // Play animal sound
     const audio = new Audio(animalSounds[index].sound)
     audio.volume = 0.7
     audio.play().catch((error) => {
-      console.log("[v0] Audio playback failed:", error)
+      console.log("Audio playback failed:", error)
     })
 
     console.log(`${animalSounds[index].name} sound playing`)
@@ -45,41 +58,36 @@ export default function SoundbarPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6 flex flex-col items-center justify-center max-w-screen-xl mx-auto">
+    <div className="app">
       {/* Header */}
-      <div className="mb-12">
-        <div className="bg-lime-300 px-12 py-6 rounded-3xl shadow-lg">
-          <h1 className="text-6xl font-bold text-black tracking-wider">SOUNDBAR</h1>
+      <div className="header">
+        <div className="soundbar-title">
+          <h1>SOUNDBAR</h1>
         </div>
       </div>
 
       {/* Sound Button Grid */}
-      <div className="grid grid-cols-4 gap-6 w-full max-w-4xl">
+      <div className="button-grid">
         {Array.from({ length: 16 }, (_, index) => (
           <Button
             key={index}
-            variant="secondary"
-            size="lg"
-            className={`
-              w-40 h-32 bg-gray-300 hover:bg-gray-400 
-              transition-colors duration-200 rounded-xl shadow-md
-              touch-manipulation active:scale-95 flex flex-col gap-2
-              ${activeButton === index ? "bg-lime-400 ring-4 ring-lime-500 shadow-lg" : ""}
-            `}
+            className={`sound-button ${activeButton === index ? "active" : ""}`}
             onClick={() => handleButtonClick(index)}
           >
-            <Volume2 className="w-8 h-8 text-black" />
-            <span className="text-sm font-semibold text-black">{animalSounds[index].name}</span>
+            <VolumeIcon />
+            <span className="animal-name">{animalSounds[index].name}</span>
           </Button>
         ))}
       </div>
 
       {/* Active Button Indicator */}
       {activeButton !== null && (
-        <div className="mt-8 text-center">
-          <p className="text-2xl text-muted-foreground font-medium">Hraje: {animalSounds[activeButton].name}</p>
+        <div className="status">
+          <p>Hraje: {animalSounds[activeButton].name}</p>
         </div>
       )}
     </div>
   )
 }
+
+export default App
